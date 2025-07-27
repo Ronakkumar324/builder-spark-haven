@@ -11,6 +11,7 @@ export default function Navbar() {
 
   const navItems = [
     { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
     { name: 'Register', path: '/role-select' },
     { name: 'Browse', path: '/suppliers' },
     { name: 'Cart', path: '/cart', icon: ShoppingCart },
