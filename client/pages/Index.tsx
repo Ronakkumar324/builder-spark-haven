@@ -5,6 +5,7 @@ import HowItWorks from '@/components/HowItWorks';
 import AboutSection from '@/components/AboutSection';
 import WhyUs from '@/components/WhyUs';
 import CTASection from '@/components/CTASection';
+import ContactSection from '@/components/ContactSection';
 
 export default function Index() {
   return (
