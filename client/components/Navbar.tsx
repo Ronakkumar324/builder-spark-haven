@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { Link as ScrollLink } from 'react-scroll';
 import { Menu, X, ShoppingCart } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 
