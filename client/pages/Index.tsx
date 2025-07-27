@@ -17,6 +17,7 @@ export default function Index() {
         <AboutSection />
         <WhyUs />
         <CTASection />
+        <ContactSection />
       </main>
       <Footer />
     </div>
