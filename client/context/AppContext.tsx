@@ -302,6 +302,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     placeOrder,
     clearCart,
     loginUser,
+    addProduct,
+    updateProduct,
+    deleteProduct,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
