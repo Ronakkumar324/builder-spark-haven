@@ -23,7 +23,7 @@ export default function CTASection() {
             Get Started as Vendor
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
-          
+
           <Link
             to="/register/supplier"
             className="group bg-transparent text-white border-2 border-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-gray-900 transform hover:-translate-y-1 transition-all duration-200 flex items-center gap-2"
@@ -32,6 +32,22 @@ export default function CTASection() {
             List Your Products
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
+        </div>
+
+        {/* Contact Button */}
+        <div className="mt-8">
+          <ScrollLink
+            to="contact"
+            smooth={true}
+            duration={800}
+            className="group inline-flex items-center gap-2 text-orange-100 hover:text-white transition-colors duration-200 cursor-pointer"
+          >
+            <MessageCircle className="w-5 h-5" />
+            <span className="border-b border-orange-200 hover:border-white transition-colors duration-200">
+              Questions? Contact Us
+            </span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </ScrollLink>
         </div>
       </div>
     </section>
