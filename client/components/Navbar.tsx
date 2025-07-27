@@ -16,7 +16,7 @@ export default function Navbar() {
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact', isScroll: true },
-    { name: 'Register', path: '/role-select' },
+    { name: 'Login / Register', path: '/role-select' },
     { name: 'Browse', path: '/suppliers' },
     { name: 'Cart', path: '/cart', icon: ShoppingCart },
   ];
