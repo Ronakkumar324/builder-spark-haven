@@ -10,6 +10,7 @@ import { AppProvider } from "@/context/AppContext";
 
 // Pages
 import Index from "./pages/Index";
+import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import RoleSelect from "./pages/RoleSelect";
 import VendorRegister from "./pages/VendorRegister";
