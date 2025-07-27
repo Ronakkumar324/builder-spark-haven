@@ -203,6 +203,89 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
   };
 
+  const addProduct = (supplierId: string, productData: Omit<Product, 'id' | 'supplierId' | 'supplierName'>) => {
+    const supplier = suppliers.find(s => s.id === supplierId);
+    if (!supplier) return;
+
+    const newProduct: Product = {
+      ...productData,
+      id: `${supplierId}-${Date.now()}`,
+      supplierId,
+      supplierName: supplier.businessName,
+    };
+
+    // Update products array
+    setProducts(prev => [...prev, newProduct]);
+
+    // Update supplier's products
+    setSuppliers(prev => prev.map(s =>
+      s.id === supplierId
+        ? { ...s, products: [...s.products, newProduct] }
+        : s
+    ));
+
+    // Update current user if they are the supplier
+    if (currentUser?.id === supplierId && userType === 'supplier') {
+      setCurrentUser(prev => prev ? { ...prev, products: [...(prev as Supplier).products, newProduct] } : null);
+    }
+  };
+
+  const updateProduct = (productId: string, updates: Partial<Pick<Product, 'name' | 'price' | 'stock'>>) => {
+    // Update products array
+    setProducts(prev => prev.map(product =>
+      product.id === productId
+        ? { ...product, ...updates }
+        : product
+    ));
+
+    // Update suppliers array
+    setSuppliers(prev => prev.map(supplier => ({
+      ...supplier,
+      products: supplier.products.map(product =>
+        product.id === productId
+          ? { ...product, ...updates }
+          : product
+      )
+    })));
+
+    // Update current user if they are a supplier
+    if (userType === 'supplier' && currentUser) {
+      const updatedSupplier = suppliers.find(s => s.id === currentUser.id);
+      if (updatedSupplier) {
+        setCurrentUser({
+          ...updatedSupplier,
+          products: updatedSupplier.products.map(product =>
+            product.id === productId
+              ? { ...product, ...updates }
+              : product
+          )
+        });
+      }
+    }
+  };
+
+  const deleteProduct = (productId: string) => {
+    // Remove from products array
+    setProducts(prev => prev.filter(product => product.id !== productId));
+
+    // Remove from suppliers array
+    setSuppliers(prev => prev.map(supplier => ({
+      ...supplier,
+      products: supplier.products.filter(product => product.id !== productId)
+    })));
+
+    // Update current user if they are a supplier
+    if (userType === 'supplier' && currentUser) {
+      const updatedSupplier = suppliers.find(s => s.id === currentUser.id);
+      if (updatedSupplier) {
+        setCurrentUser({
+          ...updatedSupplier,
+          products: updatedSupplier.products.filter(product => product.id !== productId)
+        });
+      }
+    }
+  };
+
   const value: AppContextType = {
     vendors,
     suppliers,
