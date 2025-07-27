@@ -7,12 +7,15 @@ import { useApp } from '@/context/AppContext';
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cart } = useApp();
+  const location = useLocation();
 
   const totalCartItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const isHomePage = location.pathname === '/';
 
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
+    { name: 'Contact', path: '/contact', isScroll: true },
     { name: 'Register', path: '/role-select' },
     { name: 'Browse', path: '/suppliers' },
     { name: 'Cart', path: '/cart', icon: ShoppingCart },
