@@ -54,9 +54,21 @@ export default function RoleSelect() {
                   </li>
                 </ul>
                 
-                <div className="flex items-center justify-center text-blue-600 font-semibold group-hover:text-blue-700">
-                  Get Started as Vendor
-                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                <div className="space-y-4">
+                  <div className="flex items-center justify-center text-blue-600 font-semibold group-hover:text-blue-700">
+                    Get Started as Vendor
+                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </div>
+
+                  <div className="pt-4 border-t border-gray-200">
+                    <Link
+                      to="/login/vendor"
+                      className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors"
+                    >
+                      <LogIn className="w-4 h-4" />
+                      Already have an account? Login
+                    </Link>
+                  </div>
                 </div>
               </div>
             </Link>
