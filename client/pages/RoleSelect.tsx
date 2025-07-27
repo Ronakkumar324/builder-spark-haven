@@ -8,7 +8,7 @@ export default function RoleSelect() {
 
   const handleCardClick = (path: string, event: React.MouseEvent) => {
     // Prevent navigation if clicking on login button
-    if ((event.target as HTMLElement).closest('.login-button')) {
+    if ((event.target as HTMLElement).closest(".login-button")) {
       return;
     }
     navigate(path);
