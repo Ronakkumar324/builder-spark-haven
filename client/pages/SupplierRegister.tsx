@@ -1,28 +1,9 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import {
-  ArrowLeft,
-  Truck,
-  User,
-  Phone,
-  Building,
-  Mail,
-  Lock,
-  Plus,
-  Trash2,
-  Package,
-  DollarSign,
-  Hash,
-} from "lucide-react";
+import { ArrowLeft, Truck, User, Phone, Building, Mail, Lock } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useApp } from "@/context/AppContext";
-
-interface ProductForm {
-  name: string;
-  price: string;
-  stock: string;
-}
 
 export default function SupplierRegister() {
   const navigate = useNavigate();
@@ -36,10 +17,6 @@ export default function SupplierRegister() {
     password: "",
   });
 
-  const [products, setProducts] = useState<ProductForm[]>([
-    { name: "", price: "", stock: "" },
-  ]);
-
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,28 +26,6 @@ export default function SupplierRegister() {
     });
   };
 
-  const handleProductChange = (
-    index: number,
-    field: keyof ProductForm,
-    value: string,
-  ) => {
-    setProducts((prev) =>
-      prev.map((product, i) =>
-        i === index ? { ...product, [field]: value } : product,
-      ),
-    );
-  };
-
-  const addProduct = () => {
-    setProducts((prev) => [...prev, { name: "", price: "", stock: "" }]);
-  };
-
-  const removeProduct = (index: number) => {
-    if (products.length > 1) {
-      setProducts((prev) => prev.filter((_, i) => i !== index));
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -78,18 +33,7 @@ export default function SupplierRegister() {
     // Simulate API call delay
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    // Filter valid products
-    const validProducts = products
-      .filter(
-        (product) => product.name.trim() && product.price && product.stock,
-      )
-      .map((product) => ({
-        name: product.name.trim(),
-        price: parseFloat(product.price),
-        stock: parseInt(product.stock, 10),
-      }));
-
-    // Register supplier
+    // Register supplier (no products at this stage)
     registerSupplier(
       {
         fullName: formData.fullName,
@@ -97,33 +41,24 @@ export default function SupplierRegister() {
         businessName: formData.businessName,
         email: formData.email,
       },
-      validProducts,
+      [] // Empty products array - products will be added later in dashboard
     );
 
-    console.log("Supplier registered:", {
-      supplier: formData,
-      products: validProducts,
-    });
+    console.log("Supplier registered:", formData);
 
     // Navigate to login page
     navigate("/login/supplier");
   };
 
   const isFormValid =
-    formData.fullName &&
-    formData.phone &&
-    formData.businessName &&
-    formData.password;
-  const hasValidProducts = products.some(
-    (product) => product.name.trim() && product.price && product.stock,
-  );
+    formData.fullName && formData.phone && formData.businessName && formData.password;
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
       <main className="flex-1 bg-gradient-to-br from-orange-50 to-red-50 py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl p-8">
             {/* Header */}
             <div className="text-center mb-8">
@@ -138,12 +73,13 @@ export default function SupplierRegister() {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-8">
+            <form onSubmit={handleSubmit} className="space-y-6">
               {/* Personal Information */}
               <div>
                 <h2 className="text-xl font-semibold text-gray-900 mb-6">
-                  Personal Information
+                  Business Information
                 </h2>
+                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Full Name */}
                   <div>
@@ -220,7 +156,7 @@ export default function SupplierRegister() {
                       htmlFor="email"
                       className="block text-sm font-medium text-gray-700 mb-2"
                     >
-                      Email (Optional)
+                      Email
                     </label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
@@ -261,122 +197,20 @@ export default function SupplierRegister() {
                 </div>
               </div>
 
-              {/* Products Section */}
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold text-gray-900">
-                    Your Products
-                  </h2>
-                  <button
-                    type="button"
-                    onClick={addProduct}
-                    className="inline-flex items-center gap-2 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors"
-                  >
-                    <Plus className="w-4 h-4" />
-                    Add Product
-                  </button>
-                </div>
-
-                <div className="space-y-4">
-                  {products.map((product, index) => (
-                    <div key={index} className="bg-gray-50 p-6 rounded-xl">
-                      <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-medium text-gray-900">
-                          Product #{index + 1}
-                        </h3>
-                        {products.length > 1 && (
-                          <button
-                            type="button"
-                            onClick={() => removeProduct(index)}
-                            className="text-red-500 hover:text-red-700 transition-colors"
-                          >
-                            <Trash2 className="w-5 h-5" />
-                          </button>
-                        )}
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        {/* Product Name */}
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Product Name
-                          </label>
-                          <div className="relative">
-                            <Package className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                            <input
-                              type="text"
-                              value={product.name}
-                              onChange={(e) =>
-                                handleProductChange(
-                                  index,
-                                  "name",
-                                  e.target.value,
-                                )
-                              }
-                              className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                              placeholder="e.g., Fresh Tomatoes"
-                            />
-                          </div>
-                        </div>
-
-                        {/* Price */}
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Price (per unit)
-                          </label>
-                          <div className="relative">
-                            <DollarSign className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                            <input
-                              type="number"
-                              step="0.01"
-                              min="0"
-                              value={product.price}
-                              onChange={(e) =>
-                                handleProductChange(
-                                  index,
-                                  "price",
-                                  e.target.value,
-                                )
-                              }
-                              className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                              placeholder="0.00"
-                            />
-                          </div>
-                        </div>
-
-                        {/* Stock */}
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Stock Quantity
-                          </label>
-                          <div className="relative">
-                            <Hash className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                            <input
-                              type="number"
-                              min="0"
-                              value={product.stock}
-                              onChange={(e) =>
-                                handleProductChange(
-                                  index,
-                                  "stock",
-                                  e.target.value,
-                                )
-                              }
-                              className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
-                              placeholder="0"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+              {/* Next Steps Info */}
+              <div className="bg-orange-50 p-6 rounded-xl border border-orange-200">
+                <h3 className="font-semibold text-orange-900 mb-2">
+                  What's Next?
+                </h3>
+                <p className="text-orange-800 text-sm">
+                  After registration, you'll be able to log in and add your products to your supplier catalog in your dashboard.
+                </p>
               </div>
 
               {/* Submit Button */}
               <button
                 type="submit"
-                disabled={!isFormValid || !hasValidProducts || isSubmitting}
+                disabled={!isFormValid || isSubmitting}
                 className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 px-4 rounded-lg font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1 transition-all duration-200"
               >
                 {isSubmitting ? "Creating Account..." : "Register as Supplier"}
