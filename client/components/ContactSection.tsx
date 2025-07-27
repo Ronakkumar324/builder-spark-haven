@@ -26,7 +26,10 @@ export default function ContactSection() {
           {/* Team Contact Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {teamContacts.map((contact, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-lg space-y-2 mb-6">
+              <div
+                key={index}
+                className="bg-gray-50 p-6 rounded-lg space-y-2 mb-6"
+              >
                 <p className="text-gray-800 text-sm">
                   <strong>Email:</strong>{" "}
                   <a
@@ -39,7 +42,7 @@ export default function ContactSection() {
                 <p className="text-gray-800 text-sm">
                   <strong>Phone:</strong>{" "}
                   <a
-                    href={`tel:${contact.phone.replace(/\s/g, '')}`}
+                    href={`tel:${contact.phone.replace(/\s/g, "")}`}
                     className="text-blue-600 hover:text-blue-800 transition-colors duration-200"
                   >
                     {contact.phone}

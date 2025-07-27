@@ -5,21 +5,13 @@ export default function Footer() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
-  const aboutLinks = [
-    { name: "About", path: "/about" },
-  ];
+  const aboutLinks = [{ name: "About", path: "/about" }];
 
-  const contactLinks = [
-    { name: "Contact", path: "/contact", isScroll: true },
-  ];
+  const contactLinks = [{ name: "Contact", path: "/contact", isScroll: true }];
 
-  const termsLinks = [
-    { name: "Terms & Conditions", path: "/terms" },
-  ];
+  const termsLinks = [{ name: "Terms & Conditions", path: "/terms" }];
 
-  const privacyLinks = [
-    { name: "Privacy Policy", path: "/privacy" },
-  ];
+  const privacyLinks = [{ name: "Privacy Policy", path: "/privacy" }];
 
   return (
     <footer className="bg-gray-900 text-white">
