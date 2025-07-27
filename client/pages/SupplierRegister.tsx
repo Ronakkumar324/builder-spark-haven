@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, Truck, User, Phone, Building, Mail, Lock } from "lucide-react";
+import {
+  ArrowLeft,
+  Truck,
+  User,
+  Phone,
+  Building,
+  Mail,
+  Lock,
+} from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useApp } from "@/context/AppContext";
@@ -41,7 +49,7 @@ export default function SupplierRegister() {
         businessName: formData.businessName,
         email: formData.email,
       },
-      [] // Empty products array - products will be added later in dashboard
+      [], // Empty products array - products will be added later in dashboard
     );
 
     console.log("Supplier registered:", formData);
@@ -51,7 +59,10 @@ export default function SupplierRegister() {
   };
 
   const isFormValid =
-    formData.fullName && formData.phone && formData.businessName && formData.password;
+    formData.fullName &&
+    formData.phone &&
+    formData.businessName &&
+    formData.password;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -79,7 +90,7 @@ export default function SupplierRegister() {
                 <h2 className="text-xl font-semibold text-gray-900 mb-6">
                   Business Information
                 </h2>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Full Name */}
                   <div>
@@ -203,7 +214,8 @@ export default function SupplierRegister() {
                   What's Next?
                 </h3>
                 <p className="text-orange-800 text-sm">
-                  After registration, you'll be able to log in and add your products to your supplier catalog in your dashboard.
+                  After registration, you'll be able to log in and add your
+                  products to your supplier catalog in your dashboard.
                 </p>
               </div>
 

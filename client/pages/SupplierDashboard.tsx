@@ -38,7 +38,7 @@ export default function SupplierDashboard() {
 
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [editingProduct, setEditingProduct] = useState<EditingProduct | null>(
-    null
+    null,
   );
   const [newProduct, setNewProduct] = useState({
     name: "",
@@ -46,7 +46,7 @@ export default function SupplierDashboard() {
     stock: "",
   });
   const [stockUpdates, setStockUpdates] = useState<{ [key: string]: string }>(
-    {}
+    {},
   );
 
   // Access guard - redirect if not logged in as supplier
@@ -90,27 +90,33 @@ export default function SupplierDashboard() {
   // Get orders for this supplier's products
   const supplierOrders = orders.filter((order) =>
     order.items.some((item) =>
-      currentSupplier?.products.some((product) => product.id === item.productId)
-    )
+      currentSupplier?.products.some(
+        (product) => product.id === item.productId,
+      ),
+    ),
   );
 
   const totalRevenue = supplierOrders.reduce((sum, order) => {
     const supplierItems = order.items.filter((item) =>
-      currentSupplier?.products.some((product) => product.id === item.productId)
+      currentSupplier?.products.some(
+        (product) => product.id === item.productId,
+      ),
     );
     return (
       sum +
       supplierItems.reduce(
         (itemSum, item) => itemSum + item.price * item.quantity,
-        0
+        0,
       )
     );
   }, 0);
 
   const totalProducts = currentSupplier?.products.length || 0;
   const totalStock =
-    currentSupplier?.products.reduce((sum, product) => sum + product.stock, 0) ||
-    0;
+    currentSupplier?.products.reduce(
+      (sum, product) => sum + product.stock,
+      0,
+    ) || 0;
 
   const handleAddProduct = () => {
     if (
@@ -166,7 +172,7 @@ export default function SupplierDashboard() {
   const handleDeleteProduct = (productId: string, productName: string) => {
     if (
       window.confirm(
-        `Are you sure you want to delete "${productName}"? This action cannot be undone.`
+        `Are you sure you want to delete "${productName}"? This action cannot be undone.`,
       )
     ) {
       deleteProduct(productId);
@@ -444,7 +450,10 @@ export default function SupplierDashboard() {
                                 </button>
                                 <button
                                   onClick={() =>
-                                    handleDeleteProduct(product.id, product.name)
+                                    handleDeleteProduct(
+                                      product.id,
+                                      product.name,
+                                    )
                                   }
                                   className="p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded"
                                   title="Delete Product"
@@ -475,12 +484,12 @@ export default function SupplierDashboard() {
                   {supplierOrders.slice(0, 6).map((order) => {
                     const supplierItems = order.items.filter((item) =>
                       currentSupplier?.products.some(
-                        (product) => product.id === item.productId
-                      )
+                        (product) => product.id === item.productId,
+                      ),
                     );
                     const orderTotal = supplierItems.reduce(
                       (sum, item) => sum + item.price * item.quantity,
-                      0
+                      0,
                     );
 
                     return (
