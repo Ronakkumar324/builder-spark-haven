@@ -1,12 +1,20 @@
 import { useState } from 'react';
-import { Package, Plus, Edit, Trash2, DollarSign, Hash, TrendingUp, ShoppingBag } from 'lucide-react';
+import { Package, Plus, Edit, Trash2, DollarSign, Hash, TrendingUp, ShoppingBag, Save, X, Check } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useApp, Product } from '@/context/AppContext';
 
+interface EditingProduct {
+  id: string;
+  name: string;
+  price: string;
+  stock: string;
+}
+
 export default function SupplierDashboard() {
-  const { currentUser, userType, suppliers, orders } = useApp();
+  const { currentUser, userType, suppliers, orders, addProduct, updateProduct, deleteProduct } = useApp();
   const [showAddProduct, setShowAddProduct] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<EditingProduct | null>(null);
   const [newProduct, setNewProduct] = useState({
     name: '',
     price: '',
@@ -36,10 +44,13 @@ export default function SupplierDashboard() {
   const totalStock = currentSupplier?.products.reduce((sum, product) => sum + product.stock, 0) || 0;
 
   const handleAddProduct = () => {
-    if (!newProduct.name.trim() || !newProduct.price || !newProduct.stock) return;
+    if (!newProduct.name.trim() || !newProduct.price || !newProduct.stock || !currentSupplier) return;
 
-    // In a real app, this would update the supplier's products in the backend
-    console.log('Adding product:', newProduct);
+    addProduct(currentSupplier.id, {
+      name: newProduct.name.trim(),
+      price: parseFloat(newProduct.price),
+      stock: parseInt(newProduct.stock, 10),
+    });
     
     // Reset form
     setNewProduct({ name: '', price: '', stock: '' });
@@ -47,6 +58,50 @@ export default function SupplierDashboard() {
     
     // Show success message
     alert('Product added successfully!');
+  };
+
+  const handleEditProduct = (product: Product) => {
+    setEditingProduct({
+      id: product.id,
+      name: product.name,
+      price: product.price.toString(),
+      stock: product.stock.toString(),
+    });
+  };
+
+  const handleSaveEdit = () => {
+    if (!editingProduct) return;
+    
+    const updates = {
+      name: editingProduct.name.trim(),
+      price: parseFloat(editingProduct.price),
+      stock: parseInt(editingProduct.stock, 10),
+    };
+
+    updateProduct(editingProduct.id, updates);
+    setEditingProduct(null);
+    
+    // Show success message
+    alert('Product updated successfully!');
+  };
+
+  const handleCancelEdit = () => {
+    setEditingProduct(null);
+  };
+
+  const handleDeleteProduct = (productId: string, productName: string) => {
+    if (window.confirm(`Are you sure you want to delete "${productName}"? This action cannot be undone.`)) {
+      deleteProduct(productId);
+      alert('Product deleted successfully!');
+    }
+  };
+
+  const handleQuickStockUpdate = (productId: string, currentStock: number) => {
+    const newStock = prompt('Enter new stock quantity:', currentStock.toString());
+    if (newStock && !isNaN(parseInt(newStock, 10))) {
+      updateProduct(productId, { stock: parseInt(newStock, 10) });
+      alert('Stock updated successfully!');
+    }
   };
 
   if (userType !== 'supplier' || !currentSupplier) {
@@ -170,37 +225,113 @@ export default function SupplierDashboard() {
                   <div className="divide-y divide-gray-200">
                     {currentSupplier.products.map((product) => (
                       <div key={product.id} className="p-6">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-4">
-                            <div className="w-12 h-12 bg-gradient-to-br from-orange-100 to-red-100 rounded-lg flex items-center justify-center">
-                              <Package className="w-6 h-6 text-orange-500" />
-                            </div>
-                            <div>
-                              <h3 className="text-lg font-medium text-gray-900">
-                                {product.name}
-                              </h3>
-                              <div className="flex items-center space-x-4 text-sm text-gray-500 mt-1">
-                                <span className="flex items-center gap-1">
-                                  <DollarSign className="w-4 h-4" />
-                                  {product.price.toFixed(2)} / unit
-                                </span>
-                                <span className="flex items-center gap-1">
-                                  <Hash className="w-4 h-4" />
-                                  {product.stock} in stock
-                                </span>
+                        {editingProduct && editingProduct.id === product.id ? (
+                          /* Edit Mode */
+                          <div className="space-y-4">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                  Product Name
+                                </label>
+                                <input
+                                  type="text"
+                                  value={editingProduct.name}
+                                  onChange={(e) => setEditingProduct({...editingProduct, name: e.target.value})}
+                                  className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                  Price per unit
+                                </label>
+                                <input
+                                  type="number"
+                                  step="0.01"
+                                  min="0"
+                                  value={editingProduct.price}
+                                  onChange={(e) => setEditingProduct({...editingProduct, price: e.target.value})}
+                                  className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                  Stock Quantity
+                                </label>
+                                <input
+                                  type="number"
+                                  min="0"
+                                  value={editingProduct.stock}
+                                  onChange={(e) => setEditingProduct({...editingProduct, stock: e.target.value})}
+                                  className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+                                />
                               </div>
                             </div>
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={handleSaveEdit}
+                                className="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
+                              >
+                                <Save className="w-4 h-4" />
+                                Save Changes
+                              </button>
+                              <button
+                                onClick={handleCancelEdit}
+                                className="inline-flex items-center gap-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
+                              >
+                                <X className="w-4 h-4" />
+                                Cancel
+                              </button>
+                            </div>
                           </div>
-                          
-                          <div className="flex items-center space-x-2">
-                            <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
-                              <Edit className="w-4 h-4" />
-                            </button>
-                            <button className="p-2 text-red-400 hover:text-red-600 transition-colors">
-                              <Trash2 className="w-4 h-4" />
-                            </button>
+                        ) : (
+                          /* Display Mode */
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-4">
+                              <div className="w-12 h-12 bg-gradient-to-br from-orange-100 to-red-100 rounded-lg flex items-center justify-center">
+                                <Package className="w-6 h-6 text-orange-500" />
+                              </div>
+                              <div>
+                                <h3 className="text-lg font-medium text-gray-900">
+                                  {product.name}
+                                </h3>
+                                <div className="flex items-center space-x-4 text-sm text-gray-500 mt-1">
+                                  <span className="flex items-center gap-1">
+                                    <DollarSign className="w-4 h-4" />
+                                    {product.price.toFixed(2)} / unit
+                                  </span>
+                                  <span className="flex items-center gap-1">
+                                    <Hash className="w-4 h-4" />
+                                    {product.stock} in stock
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-center space-x-2">
+                              <button
+                                onClick={() => handleQuickStockUpdate(product.id, product.stock)}
+                                className="p-2 text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
+                                title="Quick Stock Update"
+                              >
+                                <Hash className="w-4 h-4" />
+                              </button>
+                              <button
+                                onClick={() => handleEditProduct(product)}
+                                className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                                title="Edit Product"
+                              >
+                                <Edit className="w-4 h-4" />
+                              </button>
+                              <button
+                                onClick={() => handleDeleteProduct(product.id, product.name)}
+                                className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                                title="Delete Product"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
                           </div>
-                        </div>
+                        )}
                       </div>
                     ))}
                   </div>
