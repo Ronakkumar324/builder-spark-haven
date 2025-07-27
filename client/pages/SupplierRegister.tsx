@@ -311,8 +311,21 @@ export default function SupplierRegister() {
               </button>
             </form>
 
-            {/* Back Link */}
+            {/* Login Link */}
             <div className="mt-6 text-center">
+              <p className="text-gray-600">
+                Already have an account?{' '}
+                <Link
+                  to="/login/supplier"
+                  className="text-orange-600 hover:text-orange-700 font-medium transition-colors"
+                >
+                  Login here
+                </Link>
+              </p>
+            </div>
+
+            {/* Back Link */}
+            <div className="mt-4 text-center">
               <Link
                 to="/role-select"
                 className="inline-flex items-center gap-2 text-gray-600 hover:text-orange-600 transition-colors"
