@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import HeroSection from '@/components/HeroSection';
 import HowItWorks from '@/components/HowItWorks';
+import AboutSection from '@/components/AboutSection';
 import WhyUs from '@/components/WhyUs';
 import CTASection from '@/components/CTASection';
 
