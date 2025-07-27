@@ -43,8 +43,8 @@ export default function VendorRegister() {
 
     console.log('Vendor registered:', formData);
 
-    // Navigate to suppliers page
-    navigate('/suppliers');
+    // Navigate to login page
+    navigate('/login/vendor');
   };
 
   const isFormValid = formData.fullName && formData.phone && formData.businessName && formData.password;
