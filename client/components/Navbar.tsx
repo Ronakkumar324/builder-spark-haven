@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, ShoppingCart } from 'lucide-react';
+import { useApp } from '@/context/AppContext';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { cart } = useApp();
+
+  const totalCartItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -33,10 +37,15 @@ export default function Navbar() {
                 <Link
                   key={item.name}
                   to={item.path}
-                  className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors duration-200 flex items-center gap-1"
+                  className="text-gray-600 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors duration-200 flex items-center gap-1 relative"
                 >
                   {item.icon && <item.icon className="w-4 h-4" />}
                   {item.name}
+                  {item.name === 'Cart' && totalCartItems > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                      {totalCartItems}
+                    </span>
+                  )}
                 </Link>
               ))}
             </div>
@@ -68,11 +77,16 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 to={item.path}
-                className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors duration-200 flex items-center gap-2"
+                className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors duration-200 flex items-center gap-2 relative"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.icon && <item.icon className="w-4 h-4" />}
                 {item.name}
+                {item.name === 'Cart' && totalCartItems > 0 && (
+                  <span className="ml-auto bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {totalCartItems}
+                  </span>
+                )}
               </Link>
             ))}
           </div>
