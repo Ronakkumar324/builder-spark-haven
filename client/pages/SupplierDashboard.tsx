@@ -1,8 +1,20 @@
-import { useState } from 'react';
-import { Package, Plus, Edit, Trash2, DollarSign, Hash, TrendingUp, ShoppingBag, Save, X, Check } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { useApp, Product } from '@/context/AppContext';
+import { useState } from "react";
+import {
+  Package,
+  Plus,
+  Edit,
+  Trash2,
+  DollarSign,
+  Hash,
+  TrendingUp,
+  ShoppingBag,
+  Save,
+  X,
+  Check,
+} from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { useApp, Product } from "@/context/AppContext";
 
 interface EditingProduct {
   id: string;
@@ -12,52 +24,83 @@ interface EditingProduct {
 }
 
 export default function SupplierDashboard() {
-  const { currentUser, userType, suppliers, orders, addProduct, updateProduct, deleteProduct } = useApp();
+  const {
+    currentUser,
+    userType,
+    suppliers,
+    orders,
+    addProduct,
+    updateProduct,
+    deleteProduct,
+  } = useApp();
   const [showAddProduct, setShowAddProduct] = useState(false);
-  const [editingProduct, setEditingProduct] = useState<EditingProduct | null>(null);
+  const [editingProduct, setEditingProduct] = useState<EditingProduct | null>(
+    null,
+  );
   const [newProduct, setNewProduct] = useState({
-    name: '',
-    price: '',
-    stock: '',
+    name: "",
+    price: "",
+    stock: "",
   });
 
   // Get current supplier's data
-  const currentSupplier = userType === 'supplier' 
-    ? suppliers.find(s => s.id === currentUser?.id)
-    : null;
+  const currentSupplier =
+    userType === "supplier"
+      ? suppliers.find((s) => s.id === currentUser?.id)
+      : null;
 
   // Get orders for this supplier's products
-  const supplierOrders = orders.filter(order =>
-    order.items.some(item => 
-      currentSupplier?.products.some(product => product.id === item.productId)
-    )
+  const supplierOrders = orders.filter((order) =>
+    order.items.some((item) =>
+      currentSupplier?.products.some(
+        (product) => product.id === item.productId,
+      ),
+    ),
   );
 
   const totalRevenue = supplierOrders.reduce((sum, order) => {
-    const supplierItems = order.items.filter(item =>
-      currentSupplier?.products.some(product => product.id === item.productId)
+    const supplierItems = order.items.filter((item) =>
+      currentSupplier?.products.some(
+        (product) => product.id === item.productId,
+      ),
     );
-    return sum + supplierItems.reduce((itemSum, item) => itemSum + (item.price * item.quantity), 0);
+    return (
+      sum +
+      supplierItems.reduce(
+        (itemSum, item) => itemSum + item.price * item.quantity,
+        0,
+      )
+    );
   }, 0);
 
   const totalProducts = currentSupplier?.products.length || 0;
-  const totalStock = currentSupplier?.products.reduce((sum, product) => sum + product.stock, 0) || 0;
+  const totalStock =
+    currentSupplier?.products.reduce(
+      (sum, product) => sum + product.stock,
+      0,
+    ) || 0;
 
   const handleAddProduct = () => {
-    if (!newProduct.name.trim() || !newProduct.price || !newProduct.stock || !currentSupplier) return;
+    if (
+      !newProduct.name.trim() ||
+      !newProduct.price ||
+      !newProduct.stock ||
+      !currentSupplier
+    )
+      return;
 
     addProduct(currentSupplier.id, {
       name: newProduct.name.trim(),
       price: parseFloat(newProduct.price),
       stock: parseInt(newProduct.stock, 10),
     });
-    
+
     // Reset form
-    setNewProduct({ name: '', price: '', stock: '' });
+    setNewProduct({ name: "", price: "", stock: "" });
     setShowAddProduct(false);
-    
+
     // Show success message
-    alert('Product added successfully!');
+    alert("Product added successfully!");
   };
 
   const handleEditProduct = (product: Product) => {
@@ -71,7 +114,7 @@ export default function SupplierDashboard() {
 
   const handleSaveEdit = () => {
     if (!editingProduct) return;
-    
+
     const updates = {
       name: editingProduct.name.trim(),
       price: parseFloat(editingProduct.price),
@@ -80,9 +123,9 @@ export default function SupplierDashboard() {
 
     updateProduct(editingProduct.id, updates);
     setEditingProduct(null);
-    
+
     // Show success message
-    alert('Product updated successfully!');
+    alert("Product updated successfully!");
   };
 
   const handleCancelEdit = () => {
@@ -90,41 +133,48 @@ export default function SupplierDashboard() {
   };
 
   const handleDeleteProduct = (productId: string, productName: string) => {
-    if (window.confirm(`Are you sure you want to delete "${productName}"? This action cannot be undone.`)) {
+    if (
+      window.confirm(
+        `Are you sure you want to delete "${productName}"? This action cannot be undone.`,
+      )
+    ) {
       deleteProduct(productId);
-      alert('Product deleted successfully!');
+      alert("Product deleted successfully!");
     }
   };
 
   const handleQuickStockUpdate = (productId: string, currentStock: number) => {
-    const newStock = prompt('Enter new stock quantity:', currentStock.toString());
+    const newStock = prompt(
+      "Enter new stock quantity:",
+      currentStock.toString(),
+    );
     if (newStock && !isNaN(parseInt(newStock, 10))) {
       updateProduct(productId, { stock: parseInt(newStock, 10) });
-      alert('Stock updated successfully!');
+      alert("Stock updated successfully!");
     }
   };
 
-  if (userType !== 'supplier' || !currentSupplier) {
+  if (userType !== "supplier" || !currentSupplier) {
     return (
       <div className="min-h-screen flex flex-col">
         <Navbar />
-        
+
         <main className="flex-1 bg-gray-50 flex items-center justify-center py-20">
           <div className="max-w-md mx-auto text-center px-4">
             <div className="w-20 h-20 mx-auto mb-6 bg-gray-200 rounded-2xl flex items-center justify-center">
               <Package className="w-10 h-10 text-gray-400" />
             </div>
-            
+
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
               Access Denied
             </h1>
-            
+
             <p className="text-gray-600 mb-8">
               This dashboard is only available for registered suppliers.
             </p>
           </div>
         </main>
-        
+
         <Footer />
       </div>
     );
@@ -133,7 +183,7 @@ export default function SupplierDashboard() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      
+
       <main className="flex-1 bg-gray-50 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
@@ -142,7 +192,8 @@ export default function SupplierDashboard() {
               Supplier Dashboard
             </h1>
             <p className="text-gray-600">
-              Welcome back, {currentSupplier.fullName}! Manage your products and track your business.
+              Welcome back, {currentSupplier.fullName}! Manage your products and
+              track your business.
             </p>
           </div>
 
@@ -151,8 +202,12 @@ export default function SupplierDashboard() {
             <div className="bg-white p-6 rounded-xl shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Total Products</p>
-                  <p className="text-3xl font-bold text-gray-900">{totalProducts}</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Total Products
+                  </p>
+                  <p className="text-3xl font-bold text-gray-900">
+                    {totalProducts}
+                  </p>
                 </div>
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                   <Package className="w-6 h-6 text-blue-600" />
@@ -163,8 +218,12 @@ export default function SupplierDashboard() {
             <div className="bg-white p-6 rounded-xl shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Total Stock</p>
-                  <p className="text-3xl font-bold text-gray-900">{totalStock}</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Total Stock
+                  </p>
+                  <p className="text-3xl font-bold text-gray-900">
+                    {totalStock}
+                  </p>
                 </div>
                 <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
                   <Hash className="w-6 h-6 text-orange-600" />
@@ -175,8 +234,12 @@ export default function SupplierDashboard() {
             <div className="bg-white p-6 rounded-xl shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Total Revenue</p>
-                  <p className="text-3xl font-bold text-green-600">${totalRevenue.toFixed(2)}</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Total Revenue
+                  </p>
+                  <p className="text-3xl font-bold text-green-600">
+                    ${totalRevenue.toFixed(2)}
+                  </p>
                 </div>
                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                   <TrendingUp className="w-6 h-6 text-green-600" />
@@ -203,7 +266,7 @@ export default function SupplierDashboard() {
                     </button>
                   </div>
                 </div>
-                
+
                 {currentSupplier.products.length === 0 ? (
                   <div className="p-12 text-center">
                     <Package className="w-12 h-12 mx-auto text-gray-400 mb-4" />
@@ -236,7 +299,12 @@ export default function SupplierDashboard() {
                                 <input
                                   type="text"
                                   value={editingProduct.name}
-                                  onChange={(e) => setEditingProduct({...editingProduct, name: e.target.value})}
+                                  onChange={(e) =>
+                                    setEditingProduct({
+                                      ...editingProduct,
+                                      name: e.target.value,
+                                    })
+                                  }
                                   className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                                 />
                               </div>
@@ -249,7 +317,12 @@ export default function SupplierDashboard() {
                                   step="0.01"
                                   min="0"
                                   value={editingProduct.price}
-                                  onChange={(e) => setEditingProduct({...editingProduct, price: e.target.value})}
+                                  onChange={(e) =>
+                                    setEditingProduct({
+                                      ...editingProduct,
+                                      price: e.target.value,
+                                    })
+                                  }
                                   className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                                 />
                               </div>
@@ -261,7 +334,12 @@ export default function SupplierDashboard() {
                                   type="number"
                                   min="0"
                                   value={editingProduct.stock}
-                                  onChange={(e) => setEditingProduct({...editingProduct, stock: e.target.value})}
+                                  onChange={(e) =>
+                                    setEditingProduct({
+                                      ...editingProduct,
+                                      stock: e.target.value,
+                                    })
+                                  }
                                   className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                                 />
                               </div>
@@ -306,10 +384,15 @@ export default function SupplierDashboard() {
                                 </div>
                               </div>
                             </div>
-                            
+
                             <div className="flex items-center space-x-2">
                               <button
-                                onClick={() => handleQuickStockUpdate(product.id, product.stock)}
+                                onClick={() =>
+                                  handleQuickStockUpdate(
+                                    product.id,
+                                    product.stock,
+                                  )
+                                }
                                 className="p-2 text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
                                 title="Quick Stock Update"
                               >
@@ -323,7 +406,9 @@ export default function SupplierDashboard() {
                                 <Edit className="w-4 h-4" />
                               </button>
                               <button
-                                onClick={() => handleDeleteProduct(product.id, product.name)}
+                                onClick={() =>
+                                  handleDeleteProduct(product.id, product.name)
+                                }
                                 className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
                                 title="Delete Product"
                               >
@@ -347,7 +432,7 @@ export default function SupplierDashboard() {
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">
                     Add New Product
                   </h3>
-                  
+
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -356,12 +441,14 @@ export default function SupplierDashboard() {
                       <input
                         type="text"
                         value={newProduct.name}
-                        onChange={(e) => setNewProduct({...newProduct, name: e.target.value})}
+                        onChange={(e) =>
+                          setNewProduct({ ...newProduct, name: e.target.value })
+                        }
                         className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                         placeholder="e.g., Fresh Tomatoes"
                       />
                     </div>
-                    
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Price per unit
@@ -371,12 +458,17 @@ export default function SupplierDashboard() {
                         step="0.01"
                         min="0"
                         value={newProduct.price}
-                        onChange={(e) => setNewProduct({...newProduct, price: e.target.value})}
+                        onChange={(e) =>
+                          setNewProduct({
+                            ...newProduct,
+                            price: e.target.value,
+                          })
+                        }
                         className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                         placeholder="0.00"
                       />
                     </div>
-                    
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Stock Quantity
@@ -385,16 +477,25 @@ export default function SupplierDashboard() {
                         type="number"
                         min="0"
                         value={newProduct.stock}
-                        onChange={(e) => setNewProduct({...newProduct, stock: e.target.value})}
+                        onChange={(e) =>
+                          setNewProduct({
+                            ...newProduct,
+                            stock: e.target.value,
+                          })
+                        }
                         className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                         placeholder="0"
                       />
                     </div>
-                    
+
                     <div className="flex gap-2">
                       <button
                         onClick={handleAddProduct}
-                        disabled={!newProduct.name.trim() || !newProduct.price || !newProduct.stock}
+                        disabled={
+                          !newProduct.name.trim() ||
+                          !newProduct.price ||
+                          !newProduct.stock
+                        }
                         className="flex-1 bg-orange-500 text-white py-2 px-4 rounded-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
                         Add Product
@@ -415,7 +516,7 @@ export default function SupplierDashboard() {
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">
                   Recent Orders
                 </h3>
-                
+
                 {supplierOrders.length === 0 ? (
                   <div className="text-center py-6">
                     <ShoppingBag className="w-8 h-8 mx-auto text-gray-400 mb-2" />
@@ -424,13 +525,21 @@ export default function SupplierDashboard() {
                 ) : (
                   <div className="space-y-3">
                     {supplierOrders.slice(0, 5).map((order) => {
-                      const supplierItems = order.items.filter(item =>
-                        currentSupplier?.products.some(product => product.id === item.productId)
+                      const supplierItems = order.items.filter((item) =>
+                        currentSupplier?.products.some(
+                          (product) => product.id === item.productId,
+                        ),
                       );
-                      const orderTotal = supplierItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                      
+                      const orderTotal = supplierItems.reduce(
+                        (sum, item) => sum + item.price * item.quantity,
+                        0,
+                      );
+
                       return (
-                        <div key={order.id} className="border border-gray-200 rounded-lg p-3">
+                        <div
+                          key={order.id}
+                          className="border border-gray-200 rounded-lg p-3"
+                        >
                           <div className="flex justify-between items-start">
                             <div>
                               <p className="font-medium text-gray-900 text-sm">
@@ -461,7 +570,7 @@ export default function SupplierDashboard() {
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

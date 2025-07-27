@@ -1,23 +1,23 @@
-import { Link, useLocation } from 'react-router-dom';
-import { Link as ScrollLink } from 'react-scroll';
-import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Link, useLocation } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
+import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 
 export default function Footer() {
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  const isHomePage = location.pathname === "/";
 
   const footerLinks = [
-    { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact', isScroll: true },
-    { name: 'Terms', path: '/terms' },
-    { name: 'Privacy', path: '/privacy' },
+    { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact", isScroll: true },
+    { name: "Terms", path: "/terms" },
+    { name: "Privacy", path: "/privacy" },
   ];
 
   const socialLinks = [
-    { name: 'Facebook', icon: Facebook, href: '#' },
-    { name: 'Twitter', icon: Twitter, href: '#' },
-    { name: 'Instagram', icon: Instagram, href: '#' },
-    { name: 'LinkedIn', icon: Linkedin, href: '#' },
+    { name: "Facebook", icon: Facebook, href: "#" },
+    { name: "Twitter", icon: Twitter, href: "#" },
+    { name: "Instagram", icon: Instagram, href: "#" },
+    { name: "LinkedIn", icon: Linkedin, href: "#" },
   ];
 
   return (
@@ -33,7 +33,8 @@ export default function Footer() {
               <span className="text-xl font-bold">StreetSupply</span>
             </div>
             <p className="text-gray-400 text-sm max-w-md">
-              Connecting vendors and suppliers for street food supply. Simplifying local sourcing for food vendors across the region.
+              Connecting vendors and suppliers for street food supply.
+              Simplifying local sourcing for food vendors across the region.
             </p>
           </div>
 

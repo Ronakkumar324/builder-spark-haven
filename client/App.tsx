@@ -32,22 +32,22 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/role-select" element={<RoleSelect />} />
-          <Route path="/register/vendor" element={<VendorRegister />} />
-          <Route path="/login/vendor" element={<VendorLogin />} />
-          <Route path="/register/supplier" element={<SupplierRegister />} />
-          <Route path="/login/supplier" element={<SupplierLogin />} />
-          <Route path="/suppliers" element={<SupplierList />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/order-confirmation" element={<OrderConfirmation />} />
-          <Route path="/supplier-dashboard" element={<SupplierDashboard />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/role-select" element={<RoleSelect />} />
+            <Route path="/register/vendor" element={<VendorRegister />} />
+            <Route path="/login/vendor" element={<VendorLogin />} />
+            <Route path="/register/supplier" element={<SupplierRegister />} />
+            <Route path="/login/supplier" element={<SupplierLogin />} />
+            <Route path="/suppliers" element={<SupplierList />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/order-confirmation" element={<OrderConfirmation />} />
+            <Route path="/supplier-dashboard" element={<SupplierDashboard />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </BrowserRouter>
       </TooltipProvider>
     </AppProvider>

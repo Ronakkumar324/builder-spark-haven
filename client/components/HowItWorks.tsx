@@ -1,27 +1,31 @@
-import { UserPlus, List, ShoppingCart, Truck } from 'lucide-react';
+import { UserPlus, List, ShoppingCart, Truck } from "lucide-react";
 
 export default function HowItWorks() {
   const steps = [
     {
       icon: UserPlus,
-      title: 'Sign Up',
-      description: 'Register as a vendor or supplier to get started on the platform'
+      title: "Sign Up",
+      description:
+        "Register as a vendor or supplier to get started on the platform",
     },
     {
       icon: List,
-      title: 'List Products',
-      description: 'Suppliers add their products with prices and stock information'
+      title: "List Products",
+      description:
+        "Suppliers add their products with prices and stock information",
     },
     {
       icon: ShoppingCart,
-      title: 'Browse & Order',
-      description: 'Vendors browse products, add to cart, and place orders easily'
+      title: "Browse & Order",
+      description:
+        "Vendors browse products, add to cart, and place orders easily",
     },
     {
       icon: Truck,
-      title: 'Get Delivered',
-      description: 'Orders are delivered directly to vendor addresses for convenience'
-    }
+      title: "Get Delivered",
+      description:
+        "Orders are delivered directly to vendor addresses for convenience",
+    },
   ];
 
   return (
@@ -32,7 +36,8 @@ export default function HowItWorks() {
             How It Works
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Getting started with StreetSupply is simple. Follow these steps to streamline your supply chain.
+            Getting started with StreetSupply is simple. Follow these steps to
+            streamline your supply chain.
           </p>
         </div>
 
@@ -47,14 +52,12 @@ export default function HowItWorks() {
                   <div className="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gray-200 -translate-x-8"></div>
                 )}
               </div>
-              
+
               <h3 className="text-xl font-semibold text-gray-900 mb-3">
                 {step.title}
               </h3>
-              
-              <p className="text-gray-600">
-                {step.description}
-              </p>
+
+              <p className="text-gray-600">{step.description}</p>
             </div>
           ))}
         </div>

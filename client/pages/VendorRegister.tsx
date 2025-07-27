@@ -1,20 +1,20 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, User, Phone, Building, Mail, Lock } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { useApp } from '@/context/AppContext';
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { ArrowLeft, User, Phone, Building, Mail, Lock } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { useApp } from "@/context/AppContext";
 
 export default function VendorRegister() {
   const navigate = useNavigate();
   const { registerVendor } = useApp();
-  
+
   const [formData, setFormData] = useState({
-    fullName: '',
-    phone: '',
-    businessName: '',
-    email: '',
-    password: '',
+    fullName: "",
+    phone: "",
+    businessName: "",
+    email: "",
+    password: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,7 +31,7 @@ export default function VendorRegister() {
     setIsSubmitting(true);
 
     // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Register vendor
     registerVendor({
@@ -41,18 +41,22 @@ export default function VendorRegister() {
       email: formData.email,
     });
 
-    console.log('Vendor registered:', formData);
+    console.log("Vendor registered:", formData);
 
     // Navigate to login page
-    navigate('/login/vendor');
+    navigate("/login/vendor");
   };
 
-  const isFormValid = formData.fullName && formData.phone && formData.businessName && formData.password;
+  const isFormValid =
+    formData.fullName &&
+    formData.phone &&
+    formData.businessName &&
+    formData.password;
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      
+
       <main className="flex-1 bg-gradient-to-br from-blue-50 to-purple-50 py-12">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl p-8">
@@ -74,7 +78,10 @@ export default function VendorRegister() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Full Name */}
                 <div>
-                  <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="fullName"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Full Name *
                   </label>
                   <div className="relative">
@@ -94,7 +101,10 @@ export default function VendorRegister() {
 
                 {/* Phone */}
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Phone Number *
                   </label>
                   <div className="relative">
@@ -115,7 +125,10 @@ export default function VendorRegister() {
 
               {/* Business Name */}
               <div>
-                <label htmlFor="businessName" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="businessName"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Business Name *
                 </label>
                 <div className="relative">
@@ -135,7 +148,10 @@ export default function VendorRegister() {
 
               {/* Email */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Email (Optional)
                 </label>
                 <div className="relative">
@@ -154,7 +170,10 @@ export default function VendorRegister() {
 
               {/* Password */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Password *
                 </label>
                 <div className="relative">
@@ -178,14 +197,14 @@ export default function VendorRegister() {
                 disabled={!isFormValid || isSubmitting}
                 className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-4 rounded-lg font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1 transition-all duration-200"
               >
-                {isSubmitting ? 'Creating Account...' : 'Register as Vendor'}
+                {isSubmitting ? "Creating Account..." : "Register as Vendor"}
               </button>
             </form>
 
             {/* Login Link */}
             <div className="mt-6 text-center">
               <p className="text-gray-600">
-                Already have an account?{' '}
+                Already have an account?{" "}
                 <Link
                   to="/login/vendor"
                   className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
@@ -208,7 +227,7 @@ export default function VendorRegister() {
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

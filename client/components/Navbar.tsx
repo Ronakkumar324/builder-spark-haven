@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Link as ScrollLink } from 'react-scroll';
-import { Menu, X, ShoppingCart } from 'lucide-react';
-import { useApp } from '@/context/AppContext';
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
+import { Menu, X, ShoppingCart } from "lucide-react";
+import { useApp } from "@/context/AppContext";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,15 +10,15 @@ export default function Navbar() {
   const location = useLocation();
 
   const totalCartItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const isHomePage = location.pathname === '/';
+  const isHomePage = location.pathname === "/";
 
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact', isScroll: true },
-    { name: 'Login / Register', path: '/role-select' },
-    { name: 'Browse', path: '/suppliers' },
-    { name: 'Cart', path: '/cart', icon: ShoppingCart },
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact", isScroll: true },
+    { name: "Login / Register", path: "/role-select" },
+    { name: "Browse", path: "/suppliers" },
+    { name: "Cart", path: "/cart", icon: ShoppingCart },
   ];
 
   return (
@@ -31,14 +31,16 @@ export default function Navbar() {
               <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">S</span>
               </div>
-              <span className="text-xl font-bold text-gray-900">StreetSupply</span>
+              <span className="text-xl font-bold text-gray-900">
+                StreetSupply
+              </span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              {navItems.map((item) => (
+              {navItems.map((item) =>
                 item.isScroll && isHomePage ? (
                   <ScrollLink
                     key={item.name}
@@ -67,14 +69,14 @@ export default function Navbar() {
                   >
                     {item.icon && <item.icon className="w-4 h-4" />}
                     {item.name}
-                    {item.name === 'Cart' && totalCartItems > 0 && (
+                    {item.name === "Cart" && totalCartItems > 0 && (
                       <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                         {totalCartItems}
                       </span>
                     )}
                   </Link>
-                )
-              ))}
+                ),
+              )}
             </div>
           </div>
 
@@ -100,7 +102,7 @@ export default function Navbar() {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
-            {navItems.map((item) => (
+            {navItems.map((item) =>
               item.isScroll && isHomePage ? (
                 <ScrollLink
                   key={item.name}
@@ -132,14 +134,14 @@ export default function Navbar() {
                 >
                   {item.icon && <item.icon className="w-4 h-4" />}
                   {item.name}
-                  {item.name === 'Cart' && totalCartItems > 0 && (
+                  {item.name === "Cart" && totalCartItems > 0 && (
                     <span className="ml-auto bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                       {totalCartItems}
                     </span>
                   )}
                 </Link>
-              )
-            ))}
+              ),
+            )}
           </div>
         </div>
       )}

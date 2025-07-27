@@ -1,17 +1,24 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { ShoppingCart, Plus, Minus, Trash2, MapPin, ArrowLeft } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { useApp } from '@/context/AppContext';
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  ShoppingCart,
+  Plus,
+  Minus,
+  Trash2,
+  MapPin,
+  ArrowLeft,
+} from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { useApp } from "@/context/AppContext";
 
 export default function Cart() {
   const navigate = useNavigate();
   const { cart, updateCartQuantity, removeFromCart, placeOrder } = useApp();
-  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [deliveryAddress, setDeliveryAddress] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const handleQuantityChange = (productId: string, newQuantity: number) => {
     if (newQuantity === 0) {
@@ -26,38 +33,43 @@ export default function Cart() {
     if (!deliveryAddress.trim()) return;
 
     setIsSubmitting(true);
-    
+
     // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // Place order
     const orderId = placeOrder(deliveryAddress.trim());
-    
-    console.log('Order placed:', { orderId, items: cart, deliveryAddress, total });
+
+    console.log("Order placed:", {
+      orderId,
+      items: cart,
+      deliveryAddress,
+      total,
+    });
 
     // Navigate to confirmation
-    navigate('/order-confirmation');
+    navigate("/order-confirmation");
   };
 
   if (cart.length === 0) {
     return (
       <div className="min-h-screen flex flex-col">
         <Navbar />
-        
+
         <main className="flex-1 bg-gray-50 flex items-center justify-center py-20">
           <div className="max-w-md mx-auto text-center px-4">
             <div className="w-20 h-20 mx-auto mb-6 bg-gray-200 rounded-2xl flex items-center justify-center">
               <ShoppingCart className="w-10 h-10 text-gray-400" />
             </div>
-            
+
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
               Your Cart is Empty
             </h1>
-            
+
             <p className="text-gray-600 mb-8">
               Add some products from our suppliers to get started
             </p>
-            
+
             <Link
               to="/suppliers"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200"
@@ -66,7 +78,7 @@ export default function Cart() {
             </Link>
           </div>
         </main>
-        
+
         <Footer />
       </div>
     );
@@ -75,7 +87,7 @@ export default function Cart() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      
+
       <main className="flex-1 bg-gray-50 py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
@@ -106,15 +118,18 @@ export default function Cart() {
                     Cart Items ({cart.length})
                   </h2>
                 </div>
-                
+
                 <div className="divide-y divide-gray-200">
                   {cart.map((item) => (
-                    <div key={item.productId} className="p-6 flex items-center space-x-4">
+                    <div
+                      key={item.productId}
+                      className="p-6 flex items-center space-x-4"
+                    >
                       {/* Product Image Placeholder */}
                       <div className="w-16 h-16 bg-gradient-to-br from-orange-100 to-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
                         <ShoppingCart className="w-6 h-6 text-orange-500" />
                       </div>
-                      
+
                       {/* Product Info */}
                       <div className="flex-1 min-w-0">
                         <h3 className="text-lg font-medium text-gray-900 truncate">
@@ -127,12 +142,17 @@ export default function Cart() {
                           ${item.price.toFixed(2)} / unit
                         </p>
                       </div>
-                      
+
                       {/* Quantity Controls */}
                       <div className="flex items-center space-x-3">
                         <div className="flex items-center border border-gray-300 rounded-lg">
                           <button
-                            onClick={() => handleQuantityChange(item.productId, item.quantity - 1)}
+                            onClick={() =>
+                              handleQuantityChange(
+                                item.productId,
+                                item.quantity - 1,
+                              )
+                            }
                             className="p-2 hover:bg-gray-50 transition-colors"
                           >
                             <Minus className="w-4 h-4" />
@@ -141,13 +161,18 @@ export default function Cart() {
                             {item.quantity}
                           </span>
                           <button
-                            onClick={() => handleQuantityChange(item.productId, item.quantity + 1)}
+                            onClick={() =>
+                              handleQuantityChange(
+                                item.productId,
+                                item.quantity + 1,
+                              )
+                            }
                             className="p-2 hover:bg-gray-50 transition-colors"
                           >
                             <Plus className="w-4 h-4" />
                           </button>
                         </div>
-                        
+
                         <button
                           onClick={() => removeFromCart(item.productId)}
                           className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
@@ -156,7 +181,7 @@ export default function Cart() {
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
-                      
+
                       {/* Item Total */}
                       <div className="text-right">
                         <p className="text-lg font-bold text-gray-900">
@@ -176,11 +201,15 @@ export default function Cart() {
                   <h2 className="text-xl font-semibold text-gray-900 mb-6">
                     Order Summary
                   </h2>
-                  
+
                   {/* Order Details */}
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between text-gray-600">
-                      <span>Subtotal ({cart.reduce((sum, item) => sum + item.quantity, 0)} items)</span>
+                      <span>
+                        Subtotal (
+                        {cart.reduce((sum, item) => sum + item.quantity, 0)}{" "}
+                        items)
+                      </span>
                       <span>${total.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between text-gray-600">
@@ -198,7 +227,10 @@ export default function Cart() {
                   {/* Delivery Address Form */}
                   <form onSubmit={handlePlaceOrder} className="space-y-6">
                     <div>
-                      <label htmlFor="deliveryAddress" className="block text-sm font-medium text-gray-700 mb-2">
+                      <label
+                        htmlFor="deliveryAddress"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
                         Delivery Address *
                       </label>
                       <div className="relative">
@@ -220,7 +252,7 @@ export default function Cart() {
                       disabled={!deliveryAddress.trim() || isSubmitting}
                       className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 px-4 rounded-lg font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1 transition-all duration-200"
                     >
-                      {isSubmitting ? 'Placing Order...' : 'Place Order'}
+                      {isSubmitting ? "Placing Order..." : "Place Order"}
                     </button>
                   </form>
 
@@ -233,7 +265,7 @@ export default function Cart() {
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

@@ -1,21 +1,21 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, User, Phone, Mail, Lock, LogIn } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { useApp } from '@/context/AppContext';
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { ArrowLeft, User, Phone, Mail, Lock, LogIn } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { useApp } from "@/context/AppContext";
 
 export default function VendorLogin() {
   const navigate = useNavigate();
   const { vendors, loginUser } = useApp();
-  
+
   const [formData, setFormData] = useState({
-    identifier: '', // Phone or Email
-    password: '',
+    identifier: "", // Phone or Email
+    password: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -23,30 +23,29 @@ export default function VendorLogin() {
       [e.target.name]: e.target.value,
     });
     // Clear error when user starts typing
-    if (error) setError('');
+    if (error) setError("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setError('');
+    setError("");
 
     // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Find vendor by phone or email
-    const vendor = vendors.find(v => 
-      v.phone === formData.identifier || 
-      v.email === formData.identifier
+    const vendor = vendors.find(
+      (v) => v.phone === formData.identifier || v.email === formData.identifier,
     );
 
     if (vendor) {
       // In a real app, you'd verify the password hash
-      console.log('Vendor login successful:', vendor);
-      loginUser(vendor.id, 'vendor');
-      navigate('/suppliers');
+      console.log("Vendor login successful:", vendor);
+      loginUser(vendor.id, "vendor");
+      navigate("/suppliers");
     } else {
-      setError('Invalid phone/email or password. Please try again.');
+      setError("Invalid phone/email or password. Please try again.");
     }
 
     setIsSubmitting(false);
@@ -57,7 +56,7 @@ export default function VendorLogin() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      
+
       <main className="flex-1 bg-gradient-to-br from-blue-50 to-purple-50 py-12">
         <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl p-8">
@@ -85,7 +84,10 @@ export default function VendorLogin() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Phone/Email */}
               <div>
-                <label htmlFor="identifier" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="identifier"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Phone Number or Email *
                 </label>
                 <div className="relative">
@@ -109,7 +111,10 @@ export default function VendorLogin() {
 
               {/* Password */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Password *
                 </label>
                 <div className="relative">
@@ -134,14 +139,14 @@ export default function VendorLogin() {
                 className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-4 rounded-lg font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1 transition-all duration-200 flex items-center justify-center gap-2"
               >
                 <LogIn className="w-5 h-5" />
-                {isSubmitting ? 'Signing In...' : 'Sign In as Vendor'}
+                {isSubmitting ? "Signing In..." : "Sign In as Vendor"}
               </button>
             </form>
 
             {/* Register Link */}
             <div className="mt-6 text-center">
               <p className="text-gray-600">
-                Don't have an account?{' '}
+                Don't have an account?{" "}
                 <Link
                   to="/register/vendor"
                   className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
@@ -164,7 +169,7 @@ export default function VendorLogin() {
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

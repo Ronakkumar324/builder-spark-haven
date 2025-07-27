@@ -1,15 +1,9 @@
-import { Mail, Phone } from 'lucide-react';
+import { Mail, Phone } from "lucide-react";
 
 export default function ContactSection() {
-  const emails = [
-    'ronakbhambu@gmail.com',
-    'bhargavbarewar18@gmail.com'
-  ];
+  const emails = ["ronakbhambu@gmail.com", "bhargavbarewar18@gmail.com"];
 
-  const phones = [
-    '7041591447',
-    '9673511080'
-  ];
+  const phones = ["7041591447", "9673511080"];
 
   return (
     <section id="contact" className="py-20 bg-gray-100">
@@ -37,7 +31,7 @@ export default function ContactSection() {
                   📧 Email Us
                 </h3>
               </div>
-              
+
               <div className="space-y-3">
                 {emails.map((email, index) => (
                   <div key={index}>
@@ -62,7 +56,7 @@ export default function ContactSection() {
                   📞 Call Us
                 </h3>
               </div>
-              
+
               <div className="space-y-3">
                 {phones.map((phone, index) => (
                   <div key={index}>
@@ -81,8 +75,10 @@ export default function ContactSection() {
           {/* Additional Info */}
           <div className="mt-12 pt-8 border-t border-gray-200 text-center">
             <p className="text-gray-600">
-              Whether you have questions about our platform, need technical support, or want to discuss business partnerships, 
-              we're here to help. Get in touch and let's build the future of street food supply together!
+              Whether you have questions about our platform, need technical
+              support, or want to discuss business partnerships, we're here to
+              help. Get in touch and let's build the future of street food
+              supply together!
             </p>
           </div>
         </div>

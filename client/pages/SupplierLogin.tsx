@@ -1,21 +1,21 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Truck, Phone, Mail, Lock, LogIn } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { useApp } from '@/context/AppContext';
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { ArrowLeft, Truck, Phone, Mail, Lock, LogIn } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { useApp } from "@/context/AppContext";
 
 export default function SupplierLogin() {
   const navigate = useNavigate();
   const { suppliers, loginUser } = useApp();
-  
+
   const [formData, setFormData] = useState({
-    identifier: '', // Phone or Email
-    password: '',
+    identifier: "", // Phone or Email
+    password: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -23,30 +23,29 @@ export default function SupplierLogin() {
       [e.target.name]: e.target.value,
     });
     // Clear error when user starts typing
-    if (error) setError('');
+    if (error) setError("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setError('');
+    setError("");
 
     // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Find supplier by phone or email
-    const supplier = suppliers.find(s => 
-      s.phone === formData.identifier || 
-      s.email === formData.identifier
+    const supplier = suppliers.find(
+      (s) => s.phone === formData.identifier || s.email === formData.identifier,
     );
 
     if (supplier) {
       // In a real app, you'd verify the password hash
-      console.log('Supplier login successful:', supplier);
-      loginUser(supplier.id, 'supplier');
-      navigate('/supplier-dashboard');
+      console.log("Supplier login successful:", supplier);
+      loginUser(supplier.id, "supplier");
+      navigate("/supplier-dashboard");
     } else {
-      setError('Invalid phone/email or password. Please try again.');
+      setError("Invalid phone/email or password. Please try again.");
     }
 
     setIsSubmitting(false);
@@ -57,7 +56,7 @@ export default function SupplierLogin() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      
+
       <main className="flex-1 bg-gradient-to-br from-orange-50 to-red-50 py-12">
         <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl p-8">
@@ -85,7 +84,10 @@ export default function SupplierLogin() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Phone/Email */}
               <div>
-                <label htmlFor="identifier" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="identifier"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Phone Number or Email *
                 </label>
                 <div className="relative">
@@ -109,7 +111,10 @@ export default function SupplierLogin() {
 
               {/* Password */}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Password *
                 </label>
                 <div className="relative">
@@ -134,14 +139,14 @@ export default function SupplierLogin() {
                 className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 px-4 rounded-lg font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1 transition-all duration-200 flex items-center justify-center gap-2"
               >
                 <LogIn className="w-5 h-5" />
-                {isSubmitting ? 'Signing In...' : 'Sign In as Supplier'}
+                {isSubmitting ? "Signing In..." : "Sign In as Supplier"}
               </button>
             </form>
 
             {/* Register Link */}
             <div className="mt-6 text-center">
               <p className="text-gray-600">
-                Don't have an account?{' '}
+                Don't have an account?{" "}
                 <Link
                   to="/register/supplier"
                   className="text-orange-600 hover:text-orange-700 font-medium transition-colors"
@@ -164,7 +169,7 @@ export default function SupplierLogin() {
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

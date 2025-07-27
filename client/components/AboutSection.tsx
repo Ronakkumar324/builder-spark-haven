@@ -1,27 +1,31 @@
-import { Package, RefreshCw, CheckCircle, BarChart3 } from 'lucide-react';
+import { Package, RefreshCw, CheckCircle, BarChart3 } from "lucide-react";
 
 export default function AboutSection() {
   const benefits = [
     {
       icon: BarChart3,
-      title: 'Better Inventory Control',
-      description: 'Real-time updates help suppliers keep track of stock and vendors avoid shortages.'
+      title: "Better Inventory Control",
+      description:
+        "Real-time updates help suppliers keep track of stock and vendors avoid shortages.",
     },
     {
       icon: Package,
-      title: 'Higher Product Quality',
-      description: 'Suppliers can showcase item details, freshness, and pricing upfront.'
+      title: "Higher Product Quality",
+      description:
+        "Suppliers can showcase item details, freshness, and pricing upfront.",
     },
     {
       icon: CheckCircle,
-      title: 'Transparent Transactions',
-      description: 'Both sides see order histories and delivery details clearly — no confusion.'
+      title: "Transparent Transactions",
+      description:
+        "Both sides see order histories and delivery details clearly — no confusion.",
     },
     {
       icon: RefreshCw,
-      title: 'Simplified Sourcing',
-      description: 'Vendors can place orders in seconds, even from multiple suppliers.'
-    }
+      title: "Simplified Sourcing",
+      description:
+        "Vendors can place orders in seconds, even from multiple suppliers.",
+    },
   ];
 
   return (
@@ -45,16 +49,25 @@ export default function AboutSection() {
                 </div>
                 Who We Are
               </h3>
-              
+
               <div className="prose prose-lg text-gray-600 leading-relaxed">
                 <p className="mb-4">
-                  StreetSupply is a modern B2B web platform built to solve the messy, informal supply chain of the street food industry.
+                  StreetSupply is a modern B2B web platform built to solve the
+                  messy, informal supply chain of the street food industry.
                 </p>
                 <p className="mb-4">
-                  We help <span className="font-semibold text-blue-600">vendors</span> and <span className="font-semibold text-orange-600">suppliers</span> connect digitally — eliminating paperwork, middlemen, and guesswork.
+                  We help{" "}
+                  <span className="font-semibold text-blue-600">vendors</span>{" "}
+                  and{" "}
+                  <span className="font-semibold text-orange-600">
+                    suppliers
+                  </span>{" "}
+                  connect digitally — eliminating paperwork, middlemen, and
+                  guesswork.
                 </p>
                 <p>
-                  Whether you're selling ingredients or sourcing them, StreetSupply is built to streamline your business.
+                  Whether you're selling ingredients or sourcing them,
+                  StreetSupply is built to streamline your business.
                 </p>
               </div>
             </div>
@@ -71,8 +84,8 @@ export default function AboutSection() {
 
             <div className="space-y-6">
               {benefits.map((benefit, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className="bg-white p-6 rounded-xl shadow-sm border border-blue-100 hover:shadow-md transition-shadow duration-200"
                 >
                   <div className="flex items-start space-x-4">
@@ -85,9 +98,7 @@ export default function AboutSection() {
                       <h4 className="text-lg font-semibold text-gray-900 mb-2">
                         {benefit.title}
                       </h4>
-                      <p className="text-gray-600">
-                        {benefit.description}
-                      </p>
+                      <p className="text-gray-600">{benefit.description}</p>
                     </div>
                   </div>
                 </div>
@@ -104,11 +115,15 @@ export default function AboutSection() {
               <div className="text-gray-600">Registered Vendors</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-orange-600 mb-2">200+</div>
+              <div className="text-3xl font-bold text-orange-600 mb-2">
+                200+
+              </div>
               <div className="text-gray-600">Active Suppliers</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-green-600 mb-2">1000+</div>
+              <div className="text-3xl font-bold text-green-600 mb-2">
+                1000+
+              </div>
               <div className="text-gray-600">Products Available</div>
             </div>
           </div>

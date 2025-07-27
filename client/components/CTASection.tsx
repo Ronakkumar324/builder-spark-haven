@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import { Link as ScrollLink } from 'react-scroll';
-import { ArrowRight, Users, Package, MessageCircle } from 'lucide-react';
+import { Link } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
+import { ArrowRight, Users, Package, MessageCircle } from "lucide-react";
 
 export default function CTASection() {
   return (
@@ -9,9 +9,10 @@ export default function CTASection() {
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
           Ready to simplify your sourcing?
         </h2>
-        
+
         <p className="text-xl text-orange-100 mb-12 max-w-2xl mx-auto">
-          Join hundreds of vendors and suppliers who are already streamlining their business with StreetSupply.
+          Join hundreds of vendors and suppliers who are already streamlining
+          their business with StreetSupply.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

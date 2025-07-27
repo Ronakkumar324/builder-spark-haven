@@ -1,27 +1,31 @@
-import { MapPin, MessageCircle, Smartphone, Clock } from 'lucide-react';
+import { MapPin, MessageCircle, Smartphone, Clock } from "lucide-react";
 
 export default function WhyUs() {
   const features = [
     {
       icon: MapPin,
-      title: 'Hyperlocal Supplier Discovery',
-      description: 'Find suppliers in your immediate area for faster delivery and fresher products'
+      title: "Hyperlocal Supplier Discovery",
+      description:
+        "Find suppliers in your immediate area for faster delivery and fresher products",
     },
     {
       icon: MessageCircle,
-      title: 'WhatsApp Fallback Ordering',
-      description: 'Can\'t complete online? Switch to WhatsApp ordering seamlessly for convenience'
+      title: "WhatsApp Fallback Ordering",
+      description:
+        "Can't complete online? Switch to WhatsApp ordering seamlessly for convenience",
     },
     {
       icon: Smartphone,
-      title: 'No App Required',
-      description: 'Access everything through your web browser - no downloads or installations needed'
+      title: "No App Required",
+      description:
+        "Access everything through your web browser - no downloads or installations needed",
     },
     {
       icon: Clock,
-      title: 'Real-time Listings',
-      description: 'Get up-to-date product availability and pricing information instantly'
-    }
+      title: "Real-time Listings",
+      description:
+        "Get up-to-date product availability and pricing information instantly",
+    },
   ];
 
   return (
@@ -32,13 +36,17 @@ export default function WhyUs() {
             Why Choose StreetSupply?
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            We've built the platform with street food vendors in mind, focusing on simplicity and local connections.
+            We've built the platform with street food vendors in mind, focusing
+            on simplicity and local connections.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {features.map((feature, index) => (
-            <div key={index} className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200">
+            <div
+              key={index}
+              className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200"
+            >
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0">
                   <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
@@ -49,9 +57,7 @@ export default function WhyUs() {
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-600">
-                    {feature.description}
-                  </p>
+                  <p className="text-gray-600">{feature.description}</p>
                 </div>
               </div>
             </div>

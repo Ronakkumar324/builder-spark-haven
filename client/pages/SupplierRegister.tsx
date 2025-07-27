@@ -1,9 +1,22 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Truck, User, Phone, Building, Mail, Lock, Plus, Trash2, Package, DollarSign, Hash } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { useApp } from '@/context/AppContext';
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  ArrowLeft,
+  Truck,
+  User,
+  Phone,
+  Building,
+  Mail,
+  Lock,
+  Plus,
+  Trash2,
+  Package,
+  DollarSign,
+  Hash,
+} from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { useApp } from "@/context/AppContext";
 
 interface ProductForm {
   name: string;
@@ -14,17 +27,17 @@ interface ProductForm {
 export default function SupplierRegister() {
   const navigate = useNavigate();
   const { registerSupplier } = useApp();
-  
+
   const [formData, setFormData] = useState({
-    fullName: '',
-    phone: '',
-    businessName: '',
-    email: '',
-    password: '',
+    fullName: "",
+    phone: "",
+    businessName: "",
+    email: "",
+    password: "",
   });
 
   const [products, setProducts] = useState<ProductForm[]>([
-    { name: '', price: '', stock: '' }
+    { name: "", price: "", stock: "" },
   ]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,19 +49,25 @@ export default function SupplierRegister() {
     });
   };
 
-  const handleProductChange = (index: number, field: keyof ProductForm, value: string) => {
-    setProducts(prev => prev.map((product, i) => 
-      i === index ? { ...product, [field]: value } : product
-    ));
+  const handleProductChange = (
+    index: number,
+    field: keyof ProductForm,
+    value: string,
+  ) => {
+    setProducts((prev) =>
+      prev.map((product, i) =>
+        i === index ? { ...product, [field]: value } : product,
+      ),
+    );
   };
 
   const addProduct = () => {
-    setProducts(prev => [...prev, { name: '', price: '', stock: '' }]);
+    setProducts((prev) => [...prev, { name: "", price: "", stock: "" }]);
   };
 
   const removeProduct = (index: number) => {
     if (products.length > 1) {
-      setProducts(prev => prev.filter((_, i) => i !== index));
+      setProducts((prev) => prev.filter((_, i) => i !== index));
     }
   };
 
@@ -57,38 +76,52 @@ export default function SupplierRegister() {
     setIsSubmitting(true);
 
     // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Filter valid products
-    const validProducts = products.filter(product => 
-      product.name.trim() && product.price && product.stock
-    ).map(product => ({
-      name: product.name.trim(),
-      price: parseFloat(product.price),
-      stock: parseInt(product.stock, 10),
-    }));
+    const validProducts = products
+      .filter(
+        (product) => product.name.trim() && product.price && product.stock,
+      )
+      .map((product) => ({
+        name: product.name.trim(),
+        price: parseFloat(product.price),
+        stock: parseInt(product.stock, 10),
+      }));
 
     // Register supplier
-    registerSupplier({
-      fullName: formData.fullName,
-      phone: formData.phone,
-      businessName: formData.businessName,
-      email: formData.email,
-    }, validProducts);
+    registerSupplier(
+      {
+        fullName: formData.fullName,
+        phone: formData.phone,
+        businessName: formData.businessName,
+        email: formData.email,
+      },
+      validProducts,
+    );
 
-    console.log('Supplier registered:', { supplier: formData, products: validProducts });
+    console.log("Supplier registered:", {
+      supplier: formData,
+      products: validProducts,
+    });
 
     // Navigate to login page
-    navigate('/login/supplier');
+    navigate("/login/supplier");
   };
 
-  const isFormValid = formData.fullName && formData.phone && formData.businessName && formData.password;
-  const hasValidProducts = products.some(product => product.name.trim() && product.price && product.stock);
+  const isFormValid =
+    formData.fullName &&
+    formData.phone &&
+    formData.businessName &&
+    formData.password;
+  const hasValidProducts = products.some(
+    (product) => product.name.trim() && product.price && product.stock,
+  );
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      
+
       <main className="flex-1 bg-gradient-to-br from-orange-50 to-red-50 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl p-8">
@@ -108,11 +141,16 @@ export default function SupplierRegister() {
             <form onSubmit={handleSubmit} className="space-y-8">
               {/* Personal Information */}
               <div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-6">Personal Information</h2>
+                <h2 className="text-xl font-semibold text-gray-900 mb-6">
+                  Personal Information
+                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Full Name */}
                   <div>
-                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="fullName"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Full Name *
                     </label>
                     <div className="relative">
@@ -132,7 +170,10 @@ export default function SupplierRegister() {
 
                   {/* Phone */}
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="phone"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Phone Number *
                     </label>
                     <div className="relative">
@@ -152,7 +193,10 @@ export default function SupplierRegister() {
 
                   {/* Business Name */}
                   <div>
-                    <label htmlFor="businessName" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="businessName"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Business Name *
                     </label>
                     <div className="relative">
@@ -172,7 +216,10 @@ export default function SupplierRegister() {
 
                   {/* Email */}
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Email (Optional)
                     </label>
                     <div className="relative">
@@ -191,7 +238,10 @@ export default function SupplierRegister() {
 
                   {/* Password */}
                   <div className="md:col-span-2">
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="password"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Password *
                     </label>
                     <div className="relative max-w-md">
@@ -214,7 +264,9 @@ export default function SupplierRegister() {
               {/* Products Section */}
               <div>
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-semibold text-gray-900">Your Products</h2>
+                  <h2 className="text-xl font-semibold text-gray-900">
+                    Your Products
+                  </h2>
                   <button
                     type="button"
                     onClick={addProduct}
@@ -229,7 +281,9 @@ export default function SupplierRegister() {
                   {products.map((product, index) => (
                     <div key={index} className="bg-gray-50 p-6 rounded-xl">
                       <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-medium text-gray-900">Product #{index + 1}</h3>
+                        <h3 className="text-lg font-medium text-gray-900">
+                          Product #{index + 1}
+                        </h3>
                         {products.length > 1 && (
                           <button
                             type="button"
@@ -252,7 +306,13 @@ export default function SupplierRegister() {
                             <input
                               type="text"
                               value={product.name}
-                              onChange={(e) => handleProductChange(index, 'name', e.target.value)}
+                              onChange={(e) =>
+                                handleProductChange(
+                                  index,
+                                  "name",
+                                  e.target.value,
+                                )
+                              }
                               className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                               placeholder="e.g., Fresh Tomatoes"
                             />
@@ -271,7 +331,13 @@ export default function SupplierRegister() {
                               step="0.01"
                               min="0"
                               value={product.price}
-                              onChange={(e) => handleProductChange(index, 'price', e.target.value)}
+                              onChange={(e) =>
+                                handleProductChange(
+                                  index,
+                                  "price",
+                                  e.target.value,
+                                )
+                              }
                               className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                               placeholder="0.00"
                             />
@@ -289,7 +355,13 @@ export default function SupplierRegister() {
                               type="number"
                               min="0"
                               value={product.stock}
-                              onChange={(e) => handleProductChange(index, 'stock', e.target.value)}
+                              onChange={(e) =>
+                                handleProductChange(
+                                  index,
+                                  "stock",
+                                  e.target.value,
+                                )
+                              }
                               className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
                               placeholder="0"
                             />
@@ -307,14 +379,14 @@ export default function SupplierRegister() {
                 disabled={!isFormValid || !hasValidProducts || isSubmitting}
                 className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 px-4 rounded-lg font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1 transition-all duration-200"
               >
-                {isSubmitting ? 'Creating Account...' : 'Register as Supplier'}
+                {isSubmitting ? "Creating Account..." : "Register as Supplier"}
               </button>
             </form>
 
             {/* Login Link */}
             <div className="mt-6 text-center">
               <p className="text-gray-600">
-                Already have an account?{' '}
+                Already have an account?{" "}
                 <Link
                   to="/login/supplier"
                   className="text-orange-600 hover:text-orange-700 font-medium transition-colors"
@@ -337,7 +409,7 @@ export default function SupplierRegister() {
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

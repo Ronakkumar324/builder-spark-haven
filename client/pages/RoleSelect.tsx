@@ -1,13 +1,13 @@
-import { Link } from 'react-router-dom';
-import { Users, Truck, ArrowRight, LogIn } from 'lucide-react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import { Link } from "react-router-dom";
+import { Users, Truck, ArrowRight, LogIn } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function RoleSelect() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      
+
       <main className="flex-1 bg-gradient-to-br from-orange-50 to-red-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center mb-16">
@@ -15,7 +15,8 @@ export default function RoleSelect() {
               Choose Your Role
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Select whether you're a vendor looking to source products or a supplier wanting to list your products.
+              Select whether you're a vendor looking to source products or a
+              supplier wanting to list your products.
             </p>
           </div>
 
@@ -29,16 +30,16 @@ export default function RoleSelect() {
                 <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                   <Users className="w-10 h-10 text-white" />
                 </div>
-                
+
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
                   I'm a Vendor
                 </h2>
-                
+
                 <p className="text-gray-600 mb-6">
-                  Looking to source ingredients and supplies for your street food business. 
-                  Browse local suppliers and place orders easily.
+                  Looking to source ingredients and supplies for your street
+                  food business. Browse local suppliers and place orders easily.
                 </p>
-                
+
                 <ul className="text-left text-gray-600 space-y-2 mb-8">
                   <li className="flex items-center">
                     <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
@@ -53,7 +54,7 @@ export default function RoleSelect() {
                     Track your orders
                   </li>
                 </ul>
-                
+
                 <div className="space-y-4">
                   <div className="flex items-center justify-center text-blue-600 font-semibold group-hover:text-blue-700">
                     Get Started as Vendor
@@ -82,16 +83,16 @@ export default function RoleSelect() {
                 <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                   <Truck className="w-10 h-10 text-white" />
                 </div>
-                
+
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
                   I'm a Supplier
                 </h2>
-                
+
                 <p className="text-gray-600 mb-6">
-                  Provide ingredients and supplies to street food vendors in your area. 
-                  List your products and manage orders.
+                  Provide ingredients and supplies to street food vendors in
+                  your area. List your products and manage orders.
                 </p>
-                
+
                 <ul className="text-left text-gray-600 space-y-2 mb-8">
                   <li className="flex items-center">
                     <div className="w-2 h-2 bg-orange-500 rounded-full mr-3"></div>
@@ -106,7 +107,7 @@ export default function RoleSelect() {
                     Process vendor orders
                   </li>
                 </ul>
-                
+
                 <div className="space-y-4">
                   <div className="flex items-center justify-center text-orange-600 font-semibold group-hover:text-orange-700">
                     Get Started as Supplier
@@ -128,7 +129,7 @@ export default function RoleSelect() {
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );
