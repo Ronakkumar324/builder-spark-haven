@@ -78,8 +78,8 @@ export default function SupplierRegister() {
 
     console.log('Supplier registered:', { supplier: formData, products: validProducts });
 
-    // Navigate to supplier dashboard
-    navigate('/supplier-dashboard');
+    // Navigate to login page
+    navigate('/login/supplier');
   };
 
   const isFormValid = formData.fullName && formData.phone && formData.businessName && formData.password;
