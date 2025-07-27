@@ -13,6 +13,7 @@ export default function Index() {
       <main>
         <HeroSection />
         <HowItWorks />
+        <AboutSection />
         <WhyUs />
         <CTASection />
       </main>
