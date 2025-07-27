@@ -101,20 +101,44 @@ export default function Navbar() {
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
             {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors duration-200 flex items-center gap-2 relative"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.icon && <item.icon className="w-4 h-4" />}
-                {item.name}
-                {item.name === 'Cart' && totalCartItems > 0 && (
-                  <span className="ml-auto bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {totalCartItems}
-                  </span>
-                )}
-              </Link>
+              item.isScroll && isHomePage ? (
+                <ScrollLink
+                  key={item.name}
+                  to="contact"
+                  smooth={true}
+                  duration={500}
+                  className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors duration-200 flex items-center gap-2 relative cursor-pointer"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.icon && <item.icon className="w-4 h-4" />}
+                  {item.name}
+                </ScrollLink>
+              ) : item.isScroll && !isHomePage ? (
+                <Link
+                  key={item.name}
+                  to="/#contact"
+                  className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors duration-200 flex items-center gap-2 relative"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.icon && <item.icon className="w-4 h-4" />}
+                  {item.name}
+                </Link>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className="text-gray-600 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors duration-200 flex items-center gap-2 relative"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.icon && <item.icon className="w-4 h-4" />}
+                  {item.name}
+                  {item.name === 'Cart' && totalCartItems > 0 && (
+                    <span className="ml-auto bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                      {totalCartItems}
+                    </span>
+                  )}
+                </Link>
+              )
             ))}
           </div>
         </div>
