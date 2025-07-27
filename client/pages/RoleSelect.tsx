@@ -1,9 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Users, Truck, ArrowRight, LogIn } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export default function RoleSelect() {
+  const navigate = useNavigate();
+
+  const handleCardClick = (path: string, event: React.MouseEvent) => {
+    // Prevent navigation if clicking on login button
+    if ((event.target as HTMLElement).closest('.login-button')) {
+      return;
+    }
+    navigate(path);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -22,9 +32,9 @@ export default function RoleSelect() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Vendor Card */}
-            <Link
-              to="/register/vendor"
-              className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 border-2 border-transparent hover:border-orange-200"
+            <div
+              onClick={(e) => handleCardClick("/register/vendor", e)}
+              className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 border-2 border-transparent hover:border-orange-200 cursor-pointer"
             >
               <div className="text-center">
                 <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
@@ -64,7 +74,8 @@ export default function RoleSelect() {
                   <div className="pt-4 border-t border-gray-200">
                     <Link
                       to="/login/vendor"
-                      className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors"
+                      className="login-button flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-blue-600 transition-colors"
+                      onClick={(e) => e.stopPropagation()}
                     >
                       <LogIn className="w-4 h-4" />
                       Already have an account? Login
@@ -72,12 +83,12 @@ export default function RoleSelect() {
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
 
             {/* Supplier Card */}
-            <Link
-              to="/register/supplier"
-              className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 border-2 border-transparent hover:border-orange-200"
+            <div
+              onClick={(e) => handleCardClick("/register/supplier", e)}
+              className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 border-2 border-transparent hover:border-orange-200 cursor-pointer"
             >
               <div className="text-center">
                 <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
@@ -117,7 +128,8 @@ export default function RoleSelect() {
                   <div className="pt-4 border-t border-gray-200">
                     <Link
                       to="/login/supplier"
-                      className="flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-orange-600 transition-colors"
+                      className="login-button flex items-center justify-center gap-2 text-sm text-gray-600 hover:text-orange-600 transition-colors"
+                      onClick={(e) => e.stopPropagation()}
                     >
                       <LogIn className="w-4 h-4" />
                       Already have an account? Login
@@ -125,7 +137,7 @@ export default function RoleSelect() {
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
           </div>
         </div>
       </main>
