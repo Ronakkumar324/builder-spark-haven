@@ -1,23 +1,24 @@
 import { Link, useLocation } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
-import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 
 export default function Footer() {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
-  const footerLinks = [
+  const aboutLinks = [
     { name: "About", path: "/about" },
-    { name: "Contact", path: "/contact", isScroll: true },
-    { name: "Terms", path: "/terms" },
-    { name: "Privacy", path: "/privacy" },
   ];
 
-  const socialLinks = [
-    { name: "Facebook", icon: Facebook, href: "#" },
-    { name: "Twitter", icon: Twitter, href: "#" },
-    { name: "Instagram", icon: Instagram, href: "#" },
-    { name: "LinkedIn", icon: Linkedin, href: "#" },
+  const contactLinks = [
+    { name: "Contact", path: "/contact", isScroll: true },
+  ];
+
+  const termsLinks = [
+    { name: "Terms & Conditions", path: "/terms" },
+  ];
+
+  const privacyLinks = [
+    { name: "Privacy Policy", path: "/privacy" },
   ];
 
   return (
