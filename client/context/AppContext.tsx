@@ -62,6 +62,11 @@ interface AppContextType {
   placeOrder: (deliveryAddress: string) => string;
   clearCart: () => void;
   loginUser: (id: string, type: 'vendor' | 'supplier') => void;
+
+  // Product Management
+  addProduct: (supplierId: string, product: Omit<Product, 'id' | 'supplierId' | 'supplierName'>) => void;
+  updateProduct: (productId: string, updates: Partial<Pick<Product, 'name' | 'price' | 'stock'>>) => void;
+  deleteProduct: (productId: string) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
