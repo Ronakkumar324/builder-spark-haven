@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Package } from 'lucide-react';
+import { Link as ScrollLink } from 'react-scroll';
+import { ArrowRight, Users, Package, MessageCircle } from 'lucide-react';
 
 export default function CTASection() {
   return (
