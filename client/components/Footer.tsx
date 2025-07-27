@@ -3,9 +3,12 @@ import { Link as ScrollLink } from 'react-scroll';
 import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 
 export default function Footer() {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+
   const footerLinks = [
     { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Contact', path: '/contact', isScroll: true },
     { name: 'Terms', path: '/terms' },
     { name: 'Privacy', path: '/privacy' },
   ];
