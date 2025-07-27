@@ -45,12 +45,30 @@ export default function Footer() {
             <ul className="space-y-2">
               {footerLinks.map((link) => (
                 <li key={link.name}>
-                  <Link
-                    to={link.path}
-                    className="text-gray-400 hover:text-white text-sm transition-colors duration-200"
-                  >
-                    {link.name}
-                  </Link>
+                  {link.isScroll && isHomePage ? (
+                    <ScrollLink
+                      to="contact"
+                      smooth={true}
+                      duration={500}
+                      className="text-gray-400 hover:text-white text-sm transition-colors duration-200 cursor-pointer"
+                    >
+                      {link.name}
+                    </ScrollLink>
+                  ) : link.isScroll && !isHomePage ? (
+                    <Link
+                      to="/#contact"
+                      className="text-gray-400 hover:text-white text-sm transition-colors duration-200"
+                    >
+                      {link.name}
+                    </Link>
+                  ) : (
+                    <Link
+                      to={link.path}
+                      className="text-gray-400 hover:text-white text-sm transition-colors duration-200"
+                    >
+                      {link.name}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
